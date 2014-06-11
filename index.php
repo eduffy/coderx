@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="ladda/ladda-themeless.min.css" />
+  <link rel="stylesheet" href="third-party/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="third-party/ladda/ladda-themeless.min.css" />
   <style>
 #editor {
   position: relative;
@@ -80,24 +80,16 @@
  
  </body>
 
- <script src="jquery-2.1.1.js" type="text/javascript" 
-         charset="utf-8"></script>
- <script src="bootstrap/js/bootstrap.min.js" type="text/javascript" 
-         charset="utf-8"></script>
- <script src="ace/ace.js" type="text/javascript" 
-         charset="utf-8"></script>
- <script src="ace/mode-c_cpp.js" type="text/javascript" 
-         charset="utf-8"></script>
- <script src="ace/theme-clouds.js" type="text/javascript" 
-         charset="utf-8"></script>
- <script src="ladda/spin.min.js" type="text/javascript" 
-         charset="utf-8"></script>
- <script src="ladda/ladda.min.js" type="text/javascript" 
-         charset="utf-8"></script>
- <script src="McCabe/mccabe.js" type="text/javascript" 
-         charset="utf-8"></script>
- <script src="subclang.js" type="text/javascript" 
-         charset="utf-8"></script>
+ <script src="third-party/jquery-2.1.1.js" type="text/javascript" charset="utf-8"></script>
+ <script src="third-party/bootstrap-3.1.1-dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+ <script src="third-party/ace/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
+ <script src="third-party/ace/src-min/mode-c_cpp.js" type="text/javascript" charset="utf-8"></script>
+ <script src="third-party/ace/src-min/theme-clouds.js" type="text/javascript" charset="utf-8"></script>
+ <script src="third-party/ladda/spin.min.js" type="text/javascript" charset="utf-8"></script>
+ <script src="third-party/ladda/ladda.min.js" type="text/javascript" charset="utf-8"></script>
+
+ <script src="js/mccabe.js" type="text/javascript" charset="utf-8"></script>
+ <script src="js/subclang.js" type="text/javascript" charset="utf-8"></script>
 
 
 <script>
