@@ -36,8 +36,8 @@
         </ul>
        </div>
       </div>
-      <div id="error-box" class="col-md-6 alert alert-warning">
-        <p id="error-message">&nbsp;</p>
+      <div id="message-box" class="col-md-6 alert">
+        <p id="message-text">&nbsp;</p>
       </div>
       <div class="col-md-1">&nbsp;</div>
      </div>

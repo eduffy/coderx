@@ -73,14 +73,25 @@ function loadExercise()
   });
 }
 
-function showError(type, line, column, message)
+function setMessageHTML(type, message, line, column)
 {
-  var msg = 'Your code contains a ' + type + ' on Line ' 
+  /* type is "danger", "warning", or "success" */
+  $('#message-box').removeClass('alert-danger');
+  $('#message-box').removeClass('alert-warning');
+  $('#message-box').removeClass('alert-success');
+  $('#message-box').addClass('alert-' + type);
+
+  $('#message-text').html(message);
+  $('#message-box').fadeTo('fast', 1);
+  $('#message-box').data('line', line ? line : 0);
+  $('#message-box').data('column', column ? column : 0);
+}
+
+function setClangErrorMessage(errorType, line, column, message)
+{
+  var msg = 'Your code contains a ' + errorType + ' on Line ' 
           + line + ': <strong><tt>' + message + '</tt></strong>.';
-  $('#error-message').html(msg);
-  $('#error-box').fadeTo('fast', 1);
-  $('#error-box').data('line', line);
-  $('#error-box').data('column', column);
+  setMessageHTML('warning', msg, line, column);
 }
 
 function onClickErrorMessage(event)
@@ -104,11 +115,11 @@ function submitExercise(event)
     spin.stop();
 
     if(result.Errors.length > 0) {
-      showError("syntax error", result.Errors[0].line, 
+      setClangErrorMessage("syntax error", result.Errors[0].line, 
       result.Errors[0].column, result.Errors[0].message);
     }
     else if(result.Warnings.length > 0) {
-      showError("warning", result.Warnings[0].line, 
+      setClangErrorMessage("warning", result.Warnings[0].line, 
       result.Warnings[0].column, result.Warnings[0].message);
     }
     else {
