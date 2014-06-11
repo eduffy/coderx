@@ -5,67 +5,64 @@ function getFunctionName(fDecl)
   return fDecl.name;
 }
 
-function getMcCabeScore(decl) 
+function _getMcCabeScore(decl) 
 {
-  if ( decl == null ) return 0;
-  if ( decl.Kind == 'FunctionDecl' ) {
-    return getMcCabeScore(decl.body);
+  if(decl == null) return 0;
+  if(decl.Kind == 'FunctionDecl') {
+    return _getMcCabeScore(decl.body);
   }
-  if ( decl.Kind == 'CompoundStmt' ) {
+  if(decl.Kind == 'CompoundStmt') {
     var score = 0;
-    for ( var index in decl.body ) {
+    for ( var index in decl.body) {
       var thisDecl = decl.body[index];
-      score += getMcCabeScore(thisDecl);
+      score += _getMcCabeScore(thisDecl);
     }
     return score;
   }
-  if ( decl.op == '&&' ) {
+  if(decl.op == '&&') {
     return 1;
   }
-  if ( decl.op == '||' ) {
+  if(decl.op == '||') {
     return 1;
   }
-  if ( decl.Kind == 'IfStmt' ) {
+  if(decl.Kind == 'IfStmt') {
     var score = 0;
-    if ( decl.else != null ) {
-      score += 1 + getMcCabeScore(decl.else);
+    if(decl.else != null ) {
+      score += 1 + _getMcCabeScore(decl.else);
     }
-    score += 1 + getMcCabeScore(decl.then) + getMcCabeScore(decl.condition);
+    score += 1 + _getMcCabeScore(decl.then) + _getMcCabeScore(decl.condition);
     return score;
   }
-  if ( decl.Kind == 'SwitchStmt' || decl.Kind == 'BreakStmt' ) {
-    return getMcCabeScore(decl.body);
+  if(decl.Kind == 'SwitchStmt' || decl.Kind == 'BreakStmt') {
+    return _getMcCabeScore(decl.body);
   }
-  if ( decl.Kind == 'CaseStmt' ) {
+  if(decl.Kind == 'CaseStmt') {
     // complexity is 1 + the complexity of the body (subStmt) of the CaseStmt:
-    return 1 + getMcCabeScore(decl.subStmt);
+    return 1 + _getMcCabeScore(decl.subStmt);
   }
-  if ( decl.Kind == 'DoStmt' ) {
-    return 1 + getMcCabeScore(decl.body);
+  if(decl.Kind == 'DoStmt') {
+    return 1 + _getMcCabeScore(decl.body);
   }
-  if ( decl.Kind == 'ForStmt' ) {
-    return 1 + getMcCabeScore(decl.body);
+  if(decl.Kind == 'ForStmt') {
+    return 1 + _getMcCabeScore(decl.body);
   }
-  if ( decl.Kind == 'WhileStmt' ) {
-    return 1 + getMcCabeScore(decl.body);
+  if(decl.Kind == 'WhileStmt') {
+    return 1 + _getMcCabeScore(decl.body);
   }
   return 0;
 }
 
-function getFunctionsAndMcCabe(ast) 
+function getMcCabeScore(ast) 
 {
   var totalScore = 0;
-  for ( var index in ast.decls ) {
+  for (var index in ast.decls){
     var decl = ast.decls[index];
-    // console.log(decl);
-    if ( decl.Kind == 'FunctionDecl' ) {
-      var name = getFunctionName(decl);
-      var score = getMcCabeScore(decl);
+    if(decl.Kind == 'FunctionDecl') {
+      var score = _getMcCabeScore(decl);
       totalScore += score;
-      //console.log(name, score+1);
     }
   }
-  return totalScore+1;
+  return totalScore + 1;
 }
 
 function showMcCabe(number, exercise)
