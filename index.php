@@ -88,6 +88,7 @@
  <script src="third-party/ladda/spin.min.js" type="text/javascript" charset="utf-8"></script>
  <script src="third-party/ladda/ladda.min.js" type="text/javascript" charset="utf-8"></script>
 
+ <script>var APIROOT="<?php echo dirname($_SERVER["SCRIPT_NAME"]); ?>";</script>
  <script src="js/mccabe.js" type="text/javascript" charset="utf-8"></script>
  <script src="js/subclang.js" type="text/javascript" charset="utf-8"></script>
 
