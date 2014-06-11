@@ -65,24 +65,3 @@ function getMcCabeScore(ast)
   return totalScore + 1;
 }
 
-function showMcCabe(number, exercise)
-{
-  var msg = null;
-  console.log("Your McCabe number is: "+number);
-  if ( number < exercise.mccabe ) {
-    msg = "Oops -- your solution is impossible!";
-  }
-  else if ( number == exercise.mccabe ) {
-    msg = "Excellent job -- your solution is the highest quality.";
-  }
-  else if ( number == exercise.mccabe+1 ) {
-    msg = "Good, but you can write a better solution.";
-  }
-  else {
-    msg = "You can do much better.";
-  }
-
-  $('#error-message').html(msg);
-  $('#error-box').fadeTo('fast', 1);
-}
-

@@ -102,6 +102,31 @@ function setClangErrorMessage(errorType, line, column, message)
   setMessageHTML('warning', msg, line, column);
 }
 
+function showMcCabe(number, exercise)
+{
+  var passed = true;
+  var msg = null;
+  console.log("Your McCabe number is: "+number);
+  if(number < exercise.mccabe) {
+    /* at this point, the solution has passed all tests.
+       perhaps we congradulate the student on out-smarting the professor! */
+    msg = "Oops -- your solution is impossible!";
+    passed = false;
+  }
+  else if(number == exercise.mccabe)
+    msg = "Excellent job -- your solution is the highest quality.";
+  else if(number == exercise.mccabe+1) {
+    msg = "Good, but you can write a better solution.";
+    passed = false;
+  }
+  else {
+    msg = "You can do much better.";
+    passed = false;
+  }
+  setMessageHTML(passed ? 'success' : 'warning', msg);
+  return passed;
+}
+
 function onClickErrorMessage(event)
 {
   var editor = ace.edit("editor");
@@ -114,7 +139,7 @@ function onClickErrorMessage(event)
 function submitExercise(event)
 {
   event.preventDefault();
-  $('#error-box').fadeTo('fast', 0);
+  $('#message-box').fadeTo('fast', 0);
   var spin = Ladda.create(this);
   var editor = ace.edit("editor");
 
@@ -122,22 +147,36 @@ function submitExercise(event)
     console.log(result);
     spin.stop();
 
+    // TODO: save source code to git repos
+
+    var passed = true;
+
     if(result.Errors.length > 0) {
       setClangErrorMessage("syntax error", result.Errors[0].line, 
       result.Errors[0].column, result.Errors[0].message);
     }
-    else if(result.Warnings.length > 0) {
+
+    if(passed && result.Warnings.length > 0) {
       setClangErrorMessage("warning", result.Warnings[0].line, 
       result.Warnings[0].column, result.Warnings[0].message);
     }
-    else {
-      // TODO: check function prototype
-      // TODO: calculate McCabe score
-      var score = getFunctionsAndMcCabe(result.AST);
-      showMcCabe(score, currentExercise);
 
+    if(passed) {
+      // TODO: check function prototype
+    }
+
+    if(passed) {
       // TODO: check function correctness
-      // TODO: save source code to git repos
+    }
+
+    if(passed) {
+      // TODO: calculate McCabe score
+      var score = getMcCabeScore(result.AST);
+      passed = showMcCabe(score, currentExercise);
+    }
+
+
+    if(passed) {
       $('#submit-exercise').attr('data-color', 'green');
       var lbl = $('#submit-exercise').find('.ladda-label');
       lbl.text('Success!');
