@@ -58,7 +58,7 @@
       <div class="col-md-8">
        <div class="well">
         <div id="editor">// Type your code here!
-        </div>
+</div>
        </div>
       </div>
      </div> <!--row-->
