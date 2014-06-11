@@ -30,6 +30,10 @@ function loadExerciseList()
   };
 
   onLoadExerciseListError = function(xhr, textStatus, errorThrown) {
+    console.log(xhr);
+    console.log(textStatus);
+    console.log(errorThrown);
+    setMessageHTML('danger', "<strong>Internal Error.</strong>  This is not your fault, please report this error to your instructor.");
   };
 
   $.ajax({
@@ -59,6 +63,10 @@ function loadExercise()
   };
 
   onLoadExerciseError = function(xhr, textStatus, errorThrown) {
+    console.log(xhr);
+    console.log(textStatus);
+    console.log(errorThrown);
+    setMessageHTML('danger', "<strong>Internal Error.</strong>  This is not your fault, please report this error to your instructor.");
   };
 
   var name = $(this).data('name');
@@ -139,6 +147,10 @@ function submitExercise(event)
 
   onSubmitExerciseError = function(xhr, textStatus, errorThrow) {
     spin.stop();
+    console.log(xhr);
+    console.log(textStatus);
+    console.log(errorThrown);
+    setMessageHTML('danger', "<strong>Internal Error.</strong>  This is not your fault, please report this error to your instructor.");
   };
 
   spin.start();
