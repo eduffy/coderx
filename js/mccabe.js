@@ -68,24 +68,6 @@ function getFunctionsAndMcCabe(ast)
   return totalScore+1;
 }
 
-function printErrors(errors) 
-{
-  //console.log('Cannot evaulate code with errors:');
-  for ( var index in errors ) {
-        var err = errors[index];
-        //console.log('\tError on line '+err.line+': '+ err.message);
-  }
-}
-
-function printWarnings(warnings) 
-{
-  //console.log('You should eliminate warnings from your code:');
-  for ( var index in warnings ) {
-        var warn = warnings[index];
-        //console.log('\tWarning line '+warn.line+': '+ warn.message);
-  }
-}
-
 function showMcCabe(number, exercise)
 {
   var msg = null;
