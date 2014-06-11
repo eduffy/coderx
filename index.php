@@ -14,8 +14,9 @@
  <body>
   <nav class="navbar navbar-default" role="navigation">
    <div class="container-fluid">
+    <a class="navbar-brand" href="#">Code&#8478;</a>
     <ul class="nav navbar-nav navbar-right">
-     <li><a href="#">Login to Code&#8478;</a></li>
+     <li><a href="#">Login</a></li>
     </ul>
    </div>
   </nav>
