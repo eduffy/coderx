@@ -1,5 +1,4 @@
 
-var APIROOT = "/~malloy/new.hylian/api";
 var API_LOAD_EXERCISE_LIST = APIROOT + "/getExerciseList.php";
 var API_LOAD_EXERCISE = APIROOT + "/getExercise.php";
 var API_SUBMIT_EXERCISE = "/~eduffy/clang/clangAST.php";
