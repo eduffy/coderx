@@ -1,0 +1,6 @@
+title: Largest of Three Numbers
+description:  |
+	Write function <code>max</code> that accepts three integers
+	and returns the largest of the three.
+mccabe: 2
+signature: int max(int, int, int)

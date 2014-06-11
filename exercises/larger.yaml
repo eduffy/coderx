@@ -1,0 +1,6 @@
+title: Larger of Two Numbers
+description:  |
+	Write function <code>large</code>, that accepts two integers
+	and returns the larger of the two.
+mccabe: 2
+signature: int large(int, int)

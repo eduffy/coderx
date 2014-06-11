@@ -1,0 +1,9 @@
+title: Find the ith Char
+description:  |
+	Write function <code>ithChar</code> that accepts a character
+	<code>ch</code> and an integer <code>i</code>. Your function
+  should return the <code>ith</code> character after <code>ch</code>.
+  Also, your solution should wrap so that the 2nd character 
+  after Y is A.
+mccabe: 1
+signature: char ithChar(char, int)

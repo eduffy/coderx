@@ -1,0 +1,6 @@
+title: Average of Three Numbers
+description:  |
+	Write function <code>average</code>, that accepts three integers
+	and returns the average of the three.
+mccabe: 1
+signature: int average(int, int, int)

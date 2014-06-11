@@ -1,0 +1,6 @@
+title: Make a Character an Integer
+description:  |
+	Write function <code>makeInt</code> that accepts a character
+	and returns corresponding integer digit.
+mccabe: 1
+signature: int makeInt(char)

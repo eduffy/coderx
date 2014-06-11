@@ -1,0 +1,6 @@
+title: Is the character a Digit
+description:  |
+	Write function <code>isdigit</code> that accepts a character
+	and returns true if the character is a digit, and false otherwise.
+mccabe: 3
+signature: int isdigit(char)

@@ -1,0 +1,7 @@
+title: Two Numbers in Ascending Order
+description:  |
+	Write function <code>ascend</code> that accepts two integers
+	by reference.  When the function is complete, the values
+	of the two parameters are in ascending order.
+mccabe: 2
+signature: void swap(int &, int &)

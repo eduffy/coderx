@@ -1,0 +1,7 @@
+title: Three Numbers in Ascending Order
+description:  |
+	Write function <code>ascend</code> that accepts three integers
+	by reference.  When the function is complete, the values
+	of the three parameters are in ascending order.
+mccabe: 3
+signature: void swap(int &, int &, int &)
