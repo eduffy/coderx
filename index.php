@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
  <head>
+  <title>Code&#8478;</title>
   <link rel="stylesheet" href="third-party/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="third-party/ladda/ladda-themeless.min.css" />
   <style>
