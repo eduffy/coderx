@@ -154,11 +154,13 @@ function submitExercise(event)
     if(result.Errors.length > 0) {
       setClangErrorMessage("syntax error", result.Errors[0].line, 
       result.Errors[0].column, result.Errors[0].message);
+      passed = false;
     }
 
     if(passed && result.Warnings.length > 0) {
       setClangErrorMessage("warning", result.Warnings[0].line, 
       result.Warnings[0].column, result.Warnings[0].message);
+      passed = false;
     }
 
     if(passed) {
