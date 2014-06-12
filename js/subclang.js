@@ -108,9 +108,9 @@ function showMcCabe(number, exercise)
   var msg = null;
   console.log("Your McCabe number is: "+number);
   if(number < exercise.mccabe) {
-    /* at this point, the solution has passed all tests.
-       perhaps we congradulate the student on out-smarting the professor! */
-    msg = "Oops -- your solution is impossible!";
+    /* at this point, the solution has passed all tests. perhaps
+       we congratulate the student on out-smarting metrics ! */
+    msg = "Wow -- your solution is above and beyond!";
     passed = false;
   }
   else if(number == exercise.mccabe)
