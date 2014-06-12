@@ -165,6 +165,7 @@ function submitExercise(event)
 
     if(passed) {
       // TODO: check function prototype
+      passed = checkPrototype(result.AST, currentExercise);
     }
 
     if(passed) {
