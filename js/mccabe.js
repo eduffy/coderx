@@ -56,14 +56,28 @@ function _getMcCabeScore(decl)
 
 function checkPrototype(ast, currentExercise) 
 {
+  var match = false;
   for (var index in ast.decls){
     var decl = ast.decls[index];
     if(decl.Kind == 'FunctionDecl') {
-      console.log("Function NAME: "+decl.name);
-      console.log("signature:     "+currentExercise.signature);
+      var sig = decl.returnType;
+      //console.log("Function NAME: "+decl.name);
+      //console.log("signature:     "+currentExercise.signature);
+      sig += ' '+decl.name+'(';
+      for (var index in decl.params){ 
+        sig += decl.params[index].type;
+        if ( index < decl.params.length-1 ) {
+          sig += ', ';
+        }
+      }
+      sig += ')';
+      if ( sig == currentExercise.signature ) {
+        console.log("Found a signature MATCH.");
+        return true;
+      }
     }
   }
-  return true;
+  return false;
 }
 
 function getMcCabeScore(ast) 
