@@ -166,8 +166,7 @@ function submitExercise(event)
     if(passed) {
       passed = checkPrototype(result.AST, currentExercise);
       if ( !passed ) {
-        var msg = 'The function prototype much match the specification: '
-                  +'<br>'+currentExercise.signature;
+        var msg = 'The function prototype must match the specification';
         setMessageHTML('warning', msg);
       }
     }

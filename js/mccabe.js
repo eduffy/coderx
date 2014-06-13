@@ -25,7 +25,7 @@ function _getMcCabeScore(decl)
   if(decl.op == '||') {
     return 1;
   }
-  if(decl.Kind == 'IfStmt') {
+  if(decl.Kind == 'IfStmt') {
     var score = 0;
     if(decl.else != null ) {
       score += 1 + _getMcCabeScore(decl.else);
