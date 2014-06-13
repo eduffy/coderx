@@ -148,7 +148,6 @@ function submitExercise(event)
     spin.stop();
 
     // TODO: save source code to git repos
-    console.log("TODO: KILL JAVASCRIPT");
 
     var passed = true;
 
@@ -168,7 +167,9 @@ function submitExercise(event)
       // TODO: check function prototype
       passed = checkPrototype(result.AST, currentExercise);
       if ( !passed ) {
-        console.log("NOT PASSED");
+        var msg = 'The function prototype much match the specification: '
+                  +currentExercise.signature;
+        setMessageHTML('warning', msg);
       }
     }
 
