@@ -4,4 +4,4 @@ description:  |
 	by reference.  When the function is complete, the values
 	of the two parameters are in ascending order.
 mccabe: 2
-signature: void swap(int &, int &)
+signature: void ascend(int &, int &)

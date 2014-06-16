@@ -2,6 +2,6 @@ title: Swap Two Numbers
 description:  |
 	Write function <code>swap</code> that accepts two integers
 	by reference.  When the function is complete, the values
-	of the two parameters are exchnaged.
+	of the two parameters are exchaged.
 mccabe: 1
 signature: void swap(int &, int &)

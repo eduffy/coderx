@@ -108,16 +108,16 @@ function showMcCabe(number, exercise)
   var msg = null;
   console.log("Your McCabe number is: "+number);
   if(number < exercise.mccabe) {
-    /* at this point, the solution has passed all tests.
-       perhaps we congradulate the student on out-smarting the professor! */
-    msg = "Oops -- your solution is impossible!";
-    passed = false;
+    /* at this point, the solution has passed all tests. perhaps
+       we congratulate the student on out-smarting metrics ! */
+    msg = "Wow -- your solution is above and beyond!";
+    passed = true;
   }
   else if(number == exercise.mccabe)
     msg = "Excellent job -- your solution is the highest quality.";
   else if(number == exercise.mccabe+1) {
     msg = "Good, but you can write a better solution.";
-    passed = false;
+    passed = true;
   }
   else {
     msg = "You can do much better.";
@@ -164,7 +164,11 @@ function submitExercise(event)
     }
 
     if(passed) {
-      // TODO: check function prototype
+      passed = checkPrototype(result.AST, currentExercise);
+      if ( !passed ) {
+        var msg = 'The function prototype must match the specification';
+        setMessageHTML('warning', msg);
+      }
     }
 
     if(passed) {

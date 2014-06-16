@@ -1,14 +1,14 @@
 
 function getFunctionName(fDecl) 
 {
-  // console.log("Found function: "+fDecl.name);
-  return fDecl.name;
+  console.log("Found function: "+fDecl.name);
 }
 
 function _getMcCabeScore(decl) 
 {
   if(decl == null) return 0;
   if(decl.Kind == 'FunctionDecl') {
+    // This happens when there is more than one function in the file
     return _getMcCabeScore(decl.body);
   }
   if(decl.Kind == 'CompoundStmt') {
@@ -28,16 +28,19 @@ function _getMcCabeScore(decl)
   if(decl.Kind == 'IfStmt') {
     var score = 0;
     if(decl.else != null ) {
-      score += 1 + _getMcCabeScore(decl.else);
+      // score += 1 + _getMcCabeScore(decl.else);
+      score += 1;
     }
-    score += 1 + _getMcCabeScore(decl.then) + _getMcCabeScore(decl.condition);
+    score += 1 + _getMcCabeScore(decl.then) 
+               + _getMcCabeScore(decl.condition);
     return score;
   }
   if(decl.Kind == 'SwitchStmt' || decl.Kind == 'BreakStmt') {
     return _getMcCabeScore(decl.body);
   }
   if(decl.Kind == 'CaseStmt') {
-    // complexity is 1 + the complexity of the body (subStmt) of the CaseStmt:
+    // complexity is 1 + the complexity of the body (subStmt) 
+    // of the CaseStmt:
     return 1 + _getMcCabeScore(decl.subStmt);
   }
   if(decl.Kind == 'DoStmt') {
@@ -50,6 +53,32 @@ function _getMcCabeScore(decl)
     return 1 + _getMcCabeScore(decl.body);
   }
   return 0;
+}
+
+function checkPrototype(ast, currentExercise) 
+{
+  var match = false;
+  for (var index in ast.decls){
+    var decl = ast.decls[index];
+    if(decl.Kind == 'FunctionDecl') {
+      var sig = decl.returnType;
+      //console.log("Function NAME: "+decl.name);
+      //console.log("signature:     "+currentExercise.signature);
+      sig += ' '+decl.name+'(';
+      for (var index in decl.params){ 
+        sig += decl.params[index].type;
+        if ( index < decl.params.length-1 ) {
+          sig += ', ';
+        }
+      }
+      sig += ')';
+      if ( sig == currentExercise.signature ) {
+        console.log("Found a signature MATCH.");
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 function getMcCabeScore(ast) 
