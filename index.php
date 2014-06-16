@@ -27,7 +27,7 @@
  <body>
 
   <div id="login-modal" class="modal fade">
-   <form id="login-form" action="index.php" method="GET">
+   <form id="login-form" action="index.php" method="POST">
     <div class="modal-dialog">
      <div class="modal-content">
       <div class="modal-header">
