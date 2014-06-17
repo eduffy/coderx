@@ -80,8 +80,8 @@
         </ul>
        </div>
       </div>
-      <div id="message-box" class="col-md-6 alert">
-        <p id="message-text">&nbsp;</p>
+      <div id="message-box" class="col-md-6 alert hide">
+        <p id="message-text">Initial submission</p>
       </div>
       <div class="col-md-1">&nbsp;</div>
      </div>
@@ -97,6 +97,8 @@
         </div>
         <div class="panel-body">
          <p id="exercise-desc"></p>
+        <p id="attempt-message">This is your <span id="attempt-count"></span> attempt at this exercise.</p>
+        <a id="history-link" class="pull-right" href="#">View history</a>
         </div>
        </div>
       </div>
@@ -144,11 +146,17 @@ $(document).ready(function() {
        when the page loads */
     $('#exercise-panel').fadeTo(0, 0)
                         .removeClass('hide');
-    $('#error-box').fadeTo(0, 0);
+    $('#message-box').fadeTo(0, 0)
+                     .removeClass('hide');
 
     $('.dropdown-toggle').dropdown();
-    $('#error-box').click(onClickErrorMessage);
-    $('#submit-exercise').click(submitExercise);
+    $('#message-box').click(onClickErrorMessage);
+    $('#submit-exercise').click(function(event) {
+      event.preventDefault();
+      saveSubmission();
+      submitExercise(this);
+      return false;
+    });
     initCodeEditor();
     loadExerciseList();
 
