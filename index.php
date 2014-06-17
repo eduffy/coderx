@@ -98,7 +98,7 @@
         <div class="panel-body">
          <p id="exercise-desc"></p>
         <p id="attempt-message">This is your <span id="attempt-count"></span> attempt at this exercise.</p>
-        <a id="history-link" class="pull-right" href="#">View history</a>
+        <a id="history-link" class="pull-right" target="_blank" href="#">View history</a>
         </div>
        </div>
       </div>
