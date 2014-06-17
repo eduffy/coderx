@@ -1,9 +1,21 @@
-<!DOCTYPE html>
+<?php
+  $username = null;
+  if(isset($_POST['username'])) {
+    $username = $_POST['username'];
+    if($_POST['rememberMe'] == "remember-me") {
+      setcookie('CRX_USERNAME', $_POST['username'], time()+60*60*24*30);
+    }
+  }
+  elseif(isset($_COOKIE['CRX_USERNAME'])) {
+    $username = $_COOKIE['CRX_USERNAME'];
+  }
+?><!DOCTYPE html>
 <html>
  <head>
   <title>Code&#8478;</title>
   <link rel="stylesheet" href="third-party/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="third-party/ladda/ladda-themeless.min.css" />
+  <link rel="stylesheet" href="style.css" />
   <style>
 #editor {
   position: relative;
@@ -13,11 +25,42 @@
 
  </head>
  <body>
+
+  <div id="login-modal" class="modal fade">
+   <form id="login-form" action="index.php" method="POST">
+    <div class="modal-dialog">
+     <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+       <h4 class="modal-title">Login</h4>
+      </div>
+      <div class="modal-body">
+       <input id="login-username" type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
+       <input id="login-password" type="password" class="form-control" name="password" placeholder="Password" required=""/>      
+       <label class="checkbox">
+        <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
+       </label>
+       <p>Any username will do. DO NOT submit a real password.  There is no authentication at this time.</p>
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+       <button id="submit-login-info" type="button" class="btn btn-primary">Login</button>
+      </div>
+     </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+   </form>
+  </div><!-- /.modal -->
+
   <nav class="navbar navbar-default" role="navigation">
    <div class="container-fluid">
     <a class="navbar-brand" href="#">Code&#8478;</a>
     <ul class="nav navbar-nav navbar-right">
-     <li><a href="#">Login</a></li>
+<?php if($username == null): ?>
+     <li><a id="login-button" href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+<?php else: ?>
+     <li><a href="#">Welcome, <?php echo $username; ?></a></li>
+     <li><a href="logout.php">Logout</a></li>
+<?php endif; ?>
     </ul>
    </div>
   </nav>
@@ -37,8 +80,8 @@
         </ul>
        </div>
       </div>
-      <div id="message-box" class="col-md-6 alert">
-        <p id="message-text">&nbsp;</p>
+      <div id="message-box" class="col-md-6 alert hide">
+        <p id="message-text">Initial submission</p>
       </div>
       <div class="col-md-1">&nbsp;</div>
      </div>
@@ -54,6 +97,8 @@
         </div>
         <div class="panel-body">
          <p id="exercise-desc"></p>
+        <p id="attempt-message">This is your <span id="attempt-count"></span> attempt at this exercise.</p>
+        <a id="history-link" class="pull-right" target="_blank" href="#">View history</a>
         </div>
        </div>
       </div>
@@ -101,13 +146,26 @@ $(document).ready(function() {
        when the page loads */
     $('#exercise-panel').fadeTo(0, 0)
                         .removeClass('hide');
-    $('#error-box').fadeTo(0, 0);
+    $('#message-box').fadeTo(0, 0)
+                     .removeClass('hide');
 
     $('.dropdown-toggle').dropdown();
-    $('#error-box').click(onClickErrorMessage);
-    $('#submit-exercise').click(submitExercise);
+    $('#message-box').click(onClickErrorMessage);
+    $('#submit-exercise').click(function(event) {
+      event.preventDefault();
+      saveSubmission();
+      submitExercise(this);
+      return false;
+    });
     initCodeEditor();
     loadExerciseList();
+
+    $('#login-button').click(function() {
+      $('#login-modal').modal('show');
+    });
+    $('#submit-login-info').click(function() {
+      $('#login-form').submit();
+    });
 });
 </script>
   

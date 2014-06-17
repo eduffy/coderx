@@ -8,6 +8,7 @@ $exdir  = $topdir . "/exercises";
 $fn = $exdir . "/" . $_POST['name'] . ".yaml";
 if(file_exists($fn)) {
   $result = spyc_load_file($fn);
+  $result['name'] = $_POST['name'];
 }
 else {
   $result = array(
