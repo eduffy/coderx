@@ -28,8 +28,7 @@ function _getMcCabeScore(decl)
   if(decl.Kind == 'IfStmt') {
     var score = 0;
     if(decl.else != null ) {
-      // score += 1 + _getMcCabeScore(decl.else);
-      score += 1;
+      score += _getMcCabeScore(decl.else);
     }
     score += 1 + _getMcCabeScore(decl.then) 
                + _getMcCabeScore(decl.condition);
