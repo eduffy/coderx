@@ -33,62 +33,32 @@ else {
     printf("<h4>%s<small class=\"pull-right\">%s</small></h4><pre>", $msg, date("D F d Y, H:i:s", filemtime($sol2)));
     
     $diff = `diff -Nup $sol1 $sol2`;
-    echo $diff;
+    $lines = explode("\n", $diff);
+    foreach($lines as $line) {
+      if($line == "") continue;
+      if(startsWith($line, "--- ")) continue;
+      if(startsWith($line, "+++ ")) continue;
+      if(startsWith($line, "@@ ")) continue;
+      if(startsWith($line, "\\ ")) continue;
+
+      if($count == 1) {
+        printf(" %s\n", substr($line, 1));
+      }
+      elseif(startsWith($line, "+")) {
+        printf("<font color=\"green\">%s</font>\n", $line);
+      }
+      elseif(startsWith($line, "-")) {
+        printf("<font color=\"red\">%s</font>\n", $line);
+      }
+      else {
+        printf("%s\n", $line);
+      }
+    }
 
     printf("</pre>\n");
     $count += 1;
   }
 }
-
-
-exit(0);
-
-$log = file_get_contents("sample_git_log.txt");
-$lines = explode("\n", $log);
-$numEntries = 0;
-$inHeader = false;
-$date = null;
-foreach($lines as $line) {
-  if($line == "") continue;
-  if(startsWith($line, "Author: ")) continue;
-  if(startsWith($line, "diff --git")) continue;
-  if(startsWith($line, "new file ")) continue;
-  if(startsWith($line, "index ")) continue;
-  if(startsWith($line, "--- ")) continue;
-  if(startsWith($line, "+++ ")) continue;
-
-  if(startsWith($line, "commit ")) {
-    $numEntries += 1;
-    $inHeader = true;
-  }
-  elseif(startsWith($line, "@@ ")) {
-    if($inHeader) printf("<small class=\"pull-right\">%s</small></h4><pre>", $date);
-    $inHeader = false;
-  }
-  elseif(startsWith($line, "Date: ")) {
-    if($numEntries > 1) printf("</pre>");
-    /* printf("<h4><small>%s</small> ", substr($line, 6, 21)); */
-    printf("<h4>");
-    $date = substr($line, 6, 21);
-  }
-  elseif(startsWith($line, "    ") && $inHeader) {
-    printf("%s", substr($line, 4));
-  }
-  elseif(startsWith($line, "+") && $numEntries == 1) {
-    printf(" %s\n", substr($line, 1));
-  }
-  elseif(startsWith($line, "+")) {
-    printf("<font color=\"green\">%s</font>\n", $line);
-  }
-  elseif(startsWith($line, "-")) {
-    printf("<font color=\"red\">%s</font>\n", $line);
-  }
-  else {
-    printf("%s\n", $line);
-  }
-}
-printf("</pre>");
-
 ?>
 </div>
 </div>
