@@ -1,7 +1,9 @@
 
+var API_UPDATE_ATTEMPT_COUNT = APIROOT + "/getAttemptCount.php";
 var API_LOAD_EXERCISE_LIST = APIROOT + "/getExerciseList.php";
-var API_LOAD_EXERCISE = APIROOT + "/getExercise.php";
-var API_SUBMIT_EXERCISE = "/~eduffy/clang/clangAST.php";
+var API_LOAD_EXERCISE      = APIROOT + "/getExercise.php";
+var API_SAVE_SUBMISSION    = APIROOT + "/saveSubmission.php";
+var API_SUBMIT_EXERCISE    = "/~eduffy/clang/clangAST.php";
 
 var currentExercise = null;
 
@@ -13,6 +15,39 @@ function initCodeEditor()
   editor.setTheme("ace/theme/clouds");
   editor.setShowPrintMargin(false);
   editor.setReadOnly(true);
+}
+
+function updateAttemptCount()
+{
+  var ordinalSeries = [ "first", "second", "third", "fourth", "fifth", "sixth", ];
+  onUpdateAttemptCountSuccess = function(count, textStatus, xhr) {
+    console.log(count);
+    if(count.attempts == 0)
+      $('#history-link').hide();
+    else {
+      $('#history-link').attr('href', "history.php?exercise=" + currentExercise.name);
+      $('#history-link').show();
+    }
+
+    $('#attempt-count').text(ordinalSeries[count.attempts]);
+    $('#attempt-message').show();
+  }
+
+  onUpdateAttemptCountError = function(xhr, textStatus, errorThrown) {
+    console.log(xhr);
+    console.log(textStatus);
+    console.log(errorThrown);
+  }
+
+  $.ajax({
+    async:    true,
+    url :     API_UPDATE_ATTEMPT_COUNT,
+    type:     'POST',
+    data:     { 'exercise': currentExercise.name },
+    dataType: 'json',
+    success:  onUpdateAttemptCountSuccess,
+    error:    onUpdateAttemptCountError,
+  });
 }
 
 function loadExerciseList()
@@ -60,6 +95,7 @@ function loadExercise()
 
     var editor = ace.edit("editor");
     editor.setReadOnly(false);
+    updateAttemptCount();
   };
 
   onLoadExerciseError = function(xhr, textStatus, errorThrown) {
@@ -136,18 +172,49 @@ function onClickErrorMessage(event)
   editor.focus();
 }
 
-function submitExercise(event)
+function saveSubmission(event)
 {
-  event.preventDefault();
+  var editor  = ace.edit("editor");
+  var message = $('#message-text').text();
+
+  console.log('message',message);
+
+  onSaveSubmissionSuccess = function(result, textStatus, xhr) {
+    console.log(result);
+  };
+
+  onSaveSubmissionError = function(xhr, textStatus, errorThrown) {
+    console.log(xhr);
+    console.log(textStatus);
+    console.log(errorThrown);
+    setMessageHTML('danger', "<strong>Internal Error.</strong>  This is not your fault, please report this error to your instructor.");
+  };
+
+  $.ajax({
+    async:    true,
+    url :     API_SAVE_SUBMISSION,
+    type:     'POST',
+    data:     { 'exercise': currentExercise.name
+              , 'input':    editor.getValue()
+              , 'message':  message
+              },
+    dataType: 'json',
+    success:  onSaveSubmissionSuccess,
+    error:    onSaveSubmissionError,
+  });
+
+  return false;
+}
+
+function submitExercise(button)
+{
   $('#message-box').fadeTo('fast', 0);
-  var spin = Ladda.create(this);
+  var spin = Ladda.create(button);
   var editor = ace.edit("editor");
 
   onSubmitExerciseSuccess = function(result, textStatus, xhr) {
     console.log(result);
     spin.stop();
-
-    // TODO: save source code to git repos
 
     var passed = true;
 
@@ -188,9 +255,10 @@ function submitExercise(event)
       lbl.text('Success!');
       spin.disable();
     }
+    updateAttemptCount();
   };
 
-  onSubmitExerciseError = function(xhr, textStatus, errorThrow) {
+  onSubmitExerciseError = function(xhr, textStatus, errorThrown) {
     spin.stop();
     console.log(xhr);
     console.log(textStatus);
