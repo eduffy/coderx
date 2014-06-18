@@ -25,14 +25,10 @@ function _getMcCabeScore(decl)
   if(decl.op == '||') {
     return 1;
   }
-  if(decl.Kind == 'IfStmt') {
-    var score = 0;
-    if(decl.else != null ) {
-      score += _getMcCabeScore(decl.else);
-    }
-    score += 1 + _getMcCabeScore(decl.then) 
-               + _getMcCabeScore(decl.condition);
-    return score;
+  if(decl.Kind == 'IfStmt' || decl.Kind == 'ConditionalOperator') {
+    return 1 + _getMcCabeScore(decl.then) 
+             + _getMcCabeScore(decl.else)
+             + _getMcCabeScore(decl.condition);
   }
   if(decl.Kind == 'SwitchStmt' || decl.Kind == 'BreakStmt') {
     return _getMcCabeScore(decl.body);
