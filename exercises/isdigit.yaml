@@ -1,6 +1,6 @@
 title: Is the character a Digit
 description:  |
-	Write function <code>isdigit</code> that accepts a character
+	Write function <code>isDigit</code> that accepts a character
 	and returns true if the character is a digit, and false otherwise.
-mccabe: 3
-signature: bool isdigit(char)
+mccabe: 2
+signature: bool isDigit(char)

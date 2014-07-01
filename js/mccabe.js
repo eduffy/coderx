@@ -53,6 +53,7 @@ function _getMcCabeScore(decl)
 function checkPrototype(ast, currentExercise) 
 {
   var match = false;
+  console.log('correct signature '+currentExercise.signature);
   for (var index in ast.decls){
     var decl = ast.decls[index];
     if(decl.Kind == 'FunctionDecl') {
@@ -67,6 +68,7 @@ function checkPrototype(ast, currentExercise)
         }
       }
       sig += ')';
+      console.log('Found sig: '+sig);
       if ( sig == currentExercise.signature ) {
         console.log("Found a signature MATCH.");
         return true;
