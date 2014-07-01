@@ -57,8 +57,9 @@ function checkPrototype(ast, currentExercise)
   for (var index in ast.decls){
     var decl = ast.decls[index];
     if(decl.Kind == 'FunctionDecl') {
+      console.log("FOUND FUNCTION");
       var sig = decl.returnType;
-      //console.log("Function NAME: "+decl.name);
+      console.log("Function NAME: "+decl.name);
       //console.log("signature:     "+currentExercise.signature);
       sig += ' '+decl.name+'(';
       for (var index in decl.params){ 
