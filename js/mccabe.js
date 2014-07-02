@@ -19,6 +19,9 @@ function _getMcCabeScore(decl)
     }
     return score;
   }
+  if(decl.Kind == 'ReturnStmt') {
+    return _getMcCabeScore(decl.retValue);
+  }
   if(decl.op == '&&') {
     return 1;
   }
@@ -53,11 +56,11 @@ function _getMcCabeScore(decl)
 function checkPrototype(ast, currentExercise) 
 {
   var match = false;
+  console.log('correct signature '+currentExercise.signature);
   for (var index in ast.decls){
     var decl = ast.decls[index];
     if(decl.Kind == 'FunctionDecl') {
       var sig = decl.returnType;
-      //console.log("Function NAME: "+decl.name);
       //console.log("signature:     "+currentExercise.signature);
       sig += ' '+decl.name+'(';
       for (var index in decl.params){ 
