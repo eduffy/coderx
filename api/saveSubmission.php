@@ -23,14 +23,14 @@ else {
   $message_fn  = sprintf("%s/%s.%03d.msg", $soldir, $exname, $count);
 
   if(isset($_POST['input'])) {
-    file_put_contents($solution_fn, $_POST['input']);
+    file_put_contents($solution_fn, stripcslashes($_POST['input']));
   }
   elseif(isset($_FILES['input'])) {
     $fn = $_FILES['input']['tmp_name'];
     move_uploaded_file($_FILES['input']['tmp_name'], $solution_fn);
   }
 
-  file_put_contents($message_fn, $_POST['message']);
+  file_put_contents($message_fn, stripcslashes($_POST['message']));
 
   $result = array(
     "result" => "ok",
