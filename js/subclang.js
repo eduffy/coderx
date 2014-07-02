@@ -21,13 +21,22 @@ function updateAttemptCount()
 {
   var ordinalSeries = [ "first", "second", "third", "fourth", "fifth", "sixth", ];
   onUpdateAttemptCountSuccess = function(count, textStatus, xhr) {
-    console.log(count);
-    if(count.attempts == 0)
-      $('#history-link').hide();
-    else {
-      $('#history-link').attr('href', "history.php?exercise=" + currentExercise.name);
-      $('#history-link').show();
+    var editor = ace.edit("editor");
+    console.log('attemps', count);
+    if(count.attempts == 0) {
+      editor.setValue("// Type your code here!\n");
+      $('#view-history-link').hide();
+      $('#clear-history-link').hide();
     }
+    else {
+      editor.setValue(count.lastAttempt);
+
+      $('#view-history-link').attr('href', "history.php?exercise=" + currentExercise.name);
+      $('#clear-history-link').data('exercise', currentExercise.name);
+      $('#view-history-link').show();
+      $('#clear-history-link').show();
+    }
+    editor.clearSelection();
 
     $('#attempt-count').text(ordinalSeries[count.attempts]);
     $('#attempt-message').show();
@@ -37,6 +46,7 @@ function updateAttemptCount()
     console.log(xhr);
     console.log(textStatus);
     console.log(errorThrown);
+    setMessageHTML('danger', "<strong>Internal Error.</strong>  This is not your fault, please report this error to your instructor.");
   }
 
   $.ajax({
