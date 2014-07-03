@@ -32,7 +32,7 @@ else {
     $msg  = file_get_contents(sprintf("%s/%s.%03d.msg", $soldir, $exname, $count));
     printf("<h4>%s<small class=\"pull-right\">%s</small></h4><pre>", $msg, date("D F d Y, H:i:s", filemtime($sol2)));
     
-    $diff = `diff -Nup $sol1 $sol2`;
+    $diff = `diff -p -U 1000 $sol1 $sol2`;
     $lines = explode("\n", $diff);
     foreach($lines as $line) {
       if($line == "") continue;
