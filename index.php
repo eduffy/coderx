@@ -97,8 +97,9 @@
         </div>
         <div class="panel-body">
          <p id="exercise-desc"></p>
-        <p id="attempt-message">This is your <span id="attempt-count"></span> attempt at this exercise.</p>
-        <a id="history-link" class="pull-right" target="_blank" href="#">View history</a>
+         <p id="attempt-message">This is your <span id="attempt-count"></span> attempt at this exercise.</p>
+         <a id="clear-history-link" class="pull-right btn btn-link" href="#">Clear history</a>
+         <a id="view-history-link" class="pull-right btn btn-link" target="_blank" href="#">View history</a>
         </div>
        </div>
       </div>
@@ -166,6 +167,7 @@ $(document).ready(function() {
     $('#submit-login-info').click(function() {
       $('#login-form').submit();
     });
+    $('#clear-history-link').click(onClearHistory);
 });
 </script>
   

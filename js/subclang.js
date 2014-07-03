@@ -3,6 +3,7 @@ var API_UPDATE_ATTEMPT_COUNT = APIROOT + "/getAttemptCount.php";
 var API_LOAD_EXERCISE_LIST = APIROOT + "/getExerciseList.php";
 var API_LOAD_EXERCISE      = APIROOT + "/getExercise.php";
 var API_SAVE_SUBMISSION    = APIROOT + "/saveSubmission.php";
+var API_CLEAR_HISTORY      = APIROOT + "/clearHistory.php";
 var API_SUBMIT_EXERCISE    = "/~eduffy/clang/clangAST.php";
 
 var currentExercise = null;
@@ -285,6 +286,35 @@ function submitExercise(button)
     dataType: 'json',
     success:  onSubmitExerciseSuccess,
     error:    onSubmitExerciseError,
+  });
+
+  return false;
+}
+
+function onClearHistory(event)
+{
+  var exercise = $(this).data('exercise');
+  console.log('ex', exercise);
+  onClearHistorySuccess = function(result, textStatus, xhr) {
+    console.log(result);
+    updateAttemptCount();
+  };
+
+  onClearHistoryError = function(xhr, textStatus, errorThrown) {
+    console.log(xhr);
+    console.log(textStatus);
+    console.log(errorThrown);
+    setMessageHTML('danger', "<strong>Internal Error.</strong>  This is not your fault, please report this error to your instructor.");
+  };
+
+  $.ajax({
+    async:    true,
+    url :     API_CLEAR_HISTORY,
+    type:     'POST',
+    data:     { exercise: exercise },
+    dataType: 'json',
+    success:  onClearHistorySuccess,
+    error:    onClearHistoryError,
   });
 
   return false;
