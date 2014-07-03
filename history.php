@@ -33,6 +33,9 @@ else {
     printf("<h4>%s<small class=\"pull-right\">%s</small></h4><pre>", $msg, date("D F d Y, H:i:s", filemtime($sol2)));
     
     $diff = `diff -p -U 1000 $sol1 $sol2`;
+    if($diff == "") {
+      $diff = file_get_contents($sol2);
+    }
     $lines = explode("\n", $diff);
     foreach($lines as $line) {
       if($line == "") continue;
